@@ -1,0 +1,29 @@
+# Dependências
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Arquivos de ambiente
+.env
+.env.local
+.env.production
+
+# Banco de dados local
+*.sqlite
+*.db
+
+# Logs
+logs/
+*.log
+
+# Sistema operacional
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# Arquivos temporários
+*.tmp
+*.temp
