@@ -54,7 +54,7 @@ const iniciarAposta = async (usuarioId, valorAposta) => {
 
 const revelarPosicao = async (gameId, linha, coluna) => {
   if (linha < 0 || linha > 4 || coluna < 0 || coluna > 4) {
-    throw new Error('Posição inválida. Linha e coluna devem ser entre 0 e 4');
+    throw new Error('Posição inválida');
   }
 
   const jogo = await gameRepository.buscarJogoPorId(gameId);
@@ -66,7 +66,6 @@ const revelarPosicao = async (gameId, linha, coluna) => {
     throw new Error('Este jogo já foi finalizado');
   }
 
-  // 🔧 CORREÇÃO: Verificar se tabuleiro é string e fazer parse
   let tabuleiro = jogo.tabuleiro;
   if (typeof tabuleiro === 'string') {
     tabuleiro = JSON.parse(tabuleiro);
@@ -75,15 +74,14 @@ const revelarPosicao = async (gameId, linha, coluna) => {
   const posicao = tabuleiro[linha][coluna];
 
   if (posicao === 'REVELADO') {
-    throw new Error('Posição já foi revelada. Escolha outra posição.');
+    throw new Error('Posição já foi revelada');
   }
 
   if (posicao === 'BOMBA') {
-    await gameRepository.atualizarJogo(gameId, jogo.premio_atual, jogo.diamantes_encontrados, 'DERROTA', tabuleiro);
+    await gameRepository.atualizarJogo(gameId, 0, jogo.diamantes_encontrados, 'DERROTA', tabuleiro);
     return { resultado: 'BOMBA', status: 'PERDIDO' };
   }
 
-  // É DIAMANTE
   tabuleiro[linha][coluna] = 'REVELADO';
   const novosDiamantes = jogo.diamantes_encontrados + 1;
   const novoPremio = calcularPremio(parseFloat(jogo.valor_aposta), novosDiamantes);
