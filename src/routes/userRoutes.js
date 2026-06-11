@@ -3,7 +3,7 @@ const { getPerfil, getDashboard, putSaldo, deleteUser } = require('../controller
 const router = express.Router();
 
 router.get('/:id', getPerfil);
-router.get('/:id/dashboard', getDashboard);
+router.get('/dashboard/:id', getDashboard);  // Alterado para seguir o PDF
 router.put('/:id', putSaldo);
 router.delete('/:id', deleteUser);
 

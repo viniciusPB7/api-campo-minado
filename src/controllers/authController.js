@@ -14,7 +14,8 @@ const login = async (req, res) => {
   try {
     const { email, senha } = req.body;
     const resultado = await userService.login(email, senha);
-    res.json(resultado.usuario);
+    // Retorna o objeto completo com usuário e token
+    res.json(resultado);
   } catch (error) {
     res.status(401).json({ error: error.message });
   }
